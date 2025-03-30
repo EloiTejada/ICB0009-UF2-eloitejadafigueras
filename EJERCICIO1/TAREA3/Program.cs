@@ -1,11 +1,15 @@
-# Tarea 3
+﻿using System;
+using System.Threading;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 
-## ¿Has decidido visualizar información adicional a la planteada en el ejercicio? ¿Por qué? Plantea qué otra información podría ser útil visualizar.
-Si, he decidido incluir también el número del médico que atiende a cada paciente, identificarlos podría ser útil.
 
+namespace Tarea1{
 
+    class Program{
 
-public class Paciente {
+        public class Paciente {
             public int Id {get; set;}
             public int LlegadaHospital {get; set;}
             public int TiempoConsulta {get; set;}
@@ -26,15 +30,44 @@ public class Paciente {
                     _ => "Desconocido"
                 };
             }
-### La única novedad aquí es un método que he creado para convertir el Estado en strings, creía que no os gustaría que tocase las variables de la clase así que lo hice de esta manera. Lo que hace es devolver un string dependiendo el Estado.
 
+
+        }
+
+        static SemaphoreSlim SalaEspera = new SemaphoreSlim(20);
+
+        static bool[] Medicos = new bool[4]{ true, true, true,true};
+
+        static Random rnd = new Random();
+        static readonly object locker = new object();
+    
+        static int numpaciente = 0;
+         
+        static void Main(string[] args) {
+
+            Stopwatch stopwatch= new Stopwatch();
+            
+            stopwatch.Start();
+            
+            for (int i = 0; i < 4; i++) {
+                numpaciente = i+1;
+                Paciente elpaciente;
+                lock (locker) {
+                elpaciente = new Paciente(rnd.Next(0, 100), 0, rnd.Next(5000, 15000));}
+                Thread Medico = new Thread(Comportamiento);
+                Medico.Start(elpaciente);
+                Thread.Sleep(2000);                
+            }
+            stopwatch.Stop();
+       
         }
 
         static void Comportamiento(object objeto) {
 
             Stopwatch sw1a2 = new Stopwatch();
             Stopwatch sw2a3 = new Stopwatch();
-### Creamos stopwatches nuevos para medir el tiempo entre un estado y otro.
+            Stopwatch stopwatch = new Stopwatch();
+
             int num = numpaciente;
 
             Paciente paciente = (Paciente)objeto;
@@ -42,15 +75,15 @@ public class Paciente {
             paciente.Estado = 1;
             sw1a2.Start();
             Console.WriteLine("Paciente {0}. Llegado el {1}. Estado: {2}.",paciente.Id, num,paciente.ObtenerEstadoEnTexto());   
-### Iniciamos el stopwatch que mide el tiempo desde el Estado 1 al 2. Imprimimos por pantalla los datos del paciente.
+            
             SalaEspera.Wait();
             
             TimeSpan tiempoTardado = sw1a2.Elapsed;
             string tiempo = string.Format("{0}",tiempoTardado.Seconds);
-### Obtenemos el tiempo actual, y lo transformamos en un string con únicamente los segundos.
+
             sw2a3.Start();
             paciente.Estado = 2;
-### Iniciamos el stopwatch que mide el tiempo desde el Estado 2 al 3.
+
             int medicoAsignado = 1;
             lock (locker) {
                List<int> medicosDisponibles = Medicos
@@ -67,18 +100,18 @@ public class Paciente {
 
             Console.WriteLine("Paciente {0}. Llegado el {1}. Estado: {2} con el médico {4}. Duración Espera: {3} segundos.",
             paciente.Id, num,paciente.ObtenerEstadoEnTexto(),tiempo,medicoAsignado);   
-### Volvemos a imprimir la información de antes, esta vez con el tiempo tardado, el estado cambiado, y el numero del médico.
+            
             
 
             Thread.Sleep(paciente.TiempoConsulta);
-### Esperamos a que acabe la consulta.
+
             tiempoTardado = sw2a3.Elapsed;
             tiempo = string.Format("{0}",tiempoTardado.Seconds);
-### Obtenemos el tiempo tardado.
+            
             paciente.Estado = 3;
             Console.WriteLine("Paciente {0}. Llegado el {1}. Estado: {2}. Duración Consulta: {3} segundos.",
             paciente.Id, num,paciente.ObtenerEstadoEnTexto(),tiempo);   
-### Volvemos a imprimir la información.
+
             lock (locker) {
                Medicos[medicoAsignado] = true;
             }
@@ -86,10 +119,6 @@ public class Paciente {
             
 
         }
-
-
-
-![Imagen_declaracion_clase](image.png)
-![Imagen_Main](image-1.png)
-![Imagen_comportamiento_p1](image-3.png)
-![Imagen_comportamiento_p2](image-4.png)
+       
+    }
+}
