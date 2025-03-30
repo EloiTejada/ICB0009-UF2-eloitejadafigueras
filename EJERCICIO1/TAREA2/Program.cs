@@ -75,7 +75,7 @@ namespace Tarea1{
                }
             }
 
-            Thread.Sleep(10000);
+            Thread.Sleep(paciente.TiempoConsulta);
             paciente.Estado = 3;
             Console.WriteLine("El médico {0} ha acabado de atender al paciente {1}",medicoAsignado+1,paciente.Id);
 

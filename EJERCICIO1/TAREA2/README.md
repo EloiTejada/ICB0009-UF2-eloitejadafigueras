@@ -35,7 +35,7 @@ No se puede saber antes de ejecutar el código, porque al hacer aleatorio el tie
                 lock (locker) {
                 elpaciente = new Paciente(rnd.Next(0, 100), 0, rnd.Next(5000, 15000));
                 }
-### Este for tiene de diferente que crea una variable de la clase Paciente, y, dentro de un lock declara sus variables, vemos que el Id se declara con un numero aleatorio entre 0 y 100, delcara la "LlegadaHospital" en 0(aún no ha llegado, se actualizará más adelante), y otro numero aleatorio entre 5000 y 15000 para la variable "TiempoConsulta", que serán los milisegundos que deberá esperar siendo atendido.
+### Este for tiene de diferente que crea una variable de la clase Paciente, y, dentro de un lock declara sus variables(ahora lo hacemos con un lock porque si no, los hilos se generan con un numero aleatorio muy parecido), vemos que el Id se declara con un numero aleatorio entre 0 y 100, delcara la "LlegadaHospital" en 0(aún no ha llegado, se actualizará más adelante), y otro numero aleatorio entre 5000 y 15000 para la variable "TiempoConsulta", que serán los milisegundos que deberá esperar siendo atendido.
 
                 Thread Medico = new Thread(Comportamiento);
                 Medico.Start(elpaciente);
@@ -71,10 +71,10 @@ static void Comportamiento(object objeto) {
                }
             }
 ### No ha cambiado nada por aquí.
-            Thread.Sleep(10000);
+            Thread.Sleep(paciente.TiempoConsulta);
             paciente.Estado = 3;
             Console.WriteLine("El médico {0} ha acabado de atender al paciente {1}",medicoAsignado+1,paciente.Id);
-### Actualizamos el estado del paciente a 3.(Ya atendido)
+### El cliente dura en la consulta el tiempo que tenga asignado. Actualizamos el estado del paciente a 3.(Ya atendido)
             lock (locker) {
                Medicos[medicoAsignado] = true;
             }
@@ -89,4 +89,4 @@ static void Comportamiento(object objeto) {
 
 ![Imagen_declaración_clase_Ciente_y_variables_globales](image.png)
 ![Imagen_código_del_Main](image-1.png)
-![Imagen_código_funcion_Comportamiento](image-2.png)
+![Imagen_código_funcion_Comportamiento](image-3.png)
