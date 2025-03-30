@@ -1,0 +1,15 @@
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.GeneratedMSBuildEditorConfig.editorconfig
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.AssemblyInfoInputs.cache
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.AssemblyInfo.cs
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.csproj.CoreCompileInputs.cache
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.sourcelink.json
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\bin\Debug\net9.0\tarea1.exe
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\bin\Debug\net9.0\tarea1.deps.json
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\bin\Debug\net9.0\tarea1.runtimeconfig.json
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\bin\Debug\net9.0\tarea1.dll
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\bin\Debug\net9.0\tarea1.pdb
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.dll
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\refint\tarea1.dll
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.pdb
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\tarea1.genruntimeconfig.cache
+D:\DAM\Procesos e Hilos\ICB0009-UF2-PR01-eloitejadafigueras\Ejercicio2\tarea1\obj\Debug\net9.0\ref\tarea1.dll

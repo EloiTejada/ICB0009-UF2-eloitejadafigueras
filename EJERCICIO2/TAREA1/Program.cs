@@ -1,16 +1,22 @@
-# Tarea 1
+﻿using System;
+using System.Threading;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 
-## ¿Los pacientes que deben esperar para hacerse las pruebas diagnostico entran luego a hacerse las pruebas por orden de llegada? Explica que tipo de pruebas has realizado para comprobar este comportamiento. 
-Los pacientes no parecen entrar en orden de llegado.
 
-public class Paciente {
+namespace Tarea1{
+
+    class Program{
+
+        public class Paciente {
             public int Id {get; set;}
             public int LlegadaHospital {get; set;}
             public int TiempoConsulta {get; set;}
             public int Estado {get; set;}
 
             public bool requiereDiagnostico {get; set;}
-### definida la nueva variable booleana
+
             public Paciente (int Id, int LlegadaHospital, int TiempoConsulta, bool requierediagnostico)
             {
                 this.Id = Id;
@@ -18,7 +24,7 @@ public class Paciente {
                 this.TiempoConsulta = TiempoConsulta;
                 this.requiereDiagnostico = requierediagnostico;
             }
-### se ha incluido en el constructor
+
             public string ObtenerEstadoEnTexto() {
                 return Estado switch {
                     1 => "EsperaConsulta",
@@ -28,14 +34,22 @@ public class Paciente {
                     _ => "Desconocido"
                 };
             }
-### se ha ampliado los posibles estados.
+
 
         }
 
-        static SemaphoreSlim maquinas = new SemaphoreSlim(2);
-### Hemos definido un nuevo SemaphoreSlim para las maquinas de diagnóstico.
+        static SemaphoreSlim SalaEspera = new SemaphoreSlim(20);
 
-static void Main(string[] args) {
+        static SemaphoreSlim maquinas = new SemaphoreSlim(2);
+
+        static bool[] Medicos = new bool[4]{ true, true, true,true};
+
+        static Random rnd = new Random();
+        static readonly object locker = new object();
+    
+        static int numpaciente = 0;
+         
+        static void Main(string[] args) {
 
             Stopwatch stopwatch= new Stopwatch();
             
@@ -53,10 +67,8 @@ static void Main(string[] args) {
             stopwatch.Stop();
        
         }
-### Incluida la nueva variable en la ejecución del Thread, le damos un valor provisional de true.
 
-
-static void Comportamiento(object objeto) {
+        static void Comportamiento(object objeto) {
 
             Stopwatch sw1a2 = new Stopwatch();
             Stopwatch sw2a3 = new Stopwatch();
@@ -72,7 +84,6 @@ static void Comportamiento(object objeto) {
             } else {
                 paciente.requiereDiagnostico = false;
             }
-### esto básicamente convierte la variable bool requiereDiagnóstico en true o false en función de qué numero se genere aleatoriamente entre el 0 y el 1.
             
             paciente.Estado = 1;
             sw1a2.Start();
@@ -116,11 +127,10 @@ static void Comportamiento(object objeto) {
                 Thread.Sleep(15000);
                 maquinas.Release();
             }
-### condición if que si requiereDiagnóstico, hace un .Wait() al semáforo maquinas, espera 15 segundos, y hace el .Release(). También comunica el estado del paciente en ese momento.
             paciente.Estado = 4;
             Console.WriteLine("Paciente {0}. Llegado el {1}. Estado: {2}. Duración Consulta: {3} segundos.",
             paciente.Id, num,paciente.ObtenerEstadoEnTexto(),tiempo);   
-### independientemente de si se ha hecho analíticas, el estado cambia a 4 al acabar y comunica lo que ha tardado en hacer la consulta.
+
             
 
             lock (locker) {
@@ -130,11 +140,6 @@ static void Comportamiento(object objeto) {
             
 
         }
-
-
-
-
-![Imagen_clase](image.png)
-![Imagen_Main](image-1.png)
-![Imagen_Comportamiento_p1](image-2.png)
-![Imagen_Comportamiento_p2](image-3.png)
+       
+    }
+}
